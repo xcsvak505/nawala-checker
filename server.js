@@ -4,10 +4,11 @@ const cors = require("cors");
 
 const app = express();
 
+// allow frontend (edgeone)
 app.use(cors({ origin: "*" }));
 app.use(express.json());
 
-// ✅ test route (biar kita tau hidup)
+// test route
 app.get("/", (req, res) => {
   res.send("Backend hidup 🔥");
 });
@@ -26,9 +27,10 @@ app.post("/api/check", async (req, res) => {
         "Content-Type": "application/json",
         "Origin": "https://app.lk21.st",
         "Referer": "https://app.lk21.st/amarok",
-        "User-Agent": "Mozilla/5.0"
-        // kalau perlu:
-        // "Cookie": "amarok_session=ISI_COOKIE"
+        "User-Agent": "Mozilla/5.0",
+
+        // 🔥 WAJIB: isi cookie dari browser kamu
+        "Cookie": "amarok_session=ISI_COOKIE_KAMU_DI_SINI"
       },
       body: JSON.stringify({
         domains: [domain]
@@ -36,8 +38,6 @@ app.post("/api/check", async (req, res) => {
     });
 
     const text = await response.text();
-
-    console.log("LK21 RAW:", text); // 🔥 debug penting
 
     try {
       const json = JSON.parse(text);
@@ -47,7 +47,6 @@ app.post("/api/check", async (req, res) => {
     }
 
   } catch (err) {
-    console.error("ERROR:", err);
     res.status(500).json({ error: err.toString() });
   }
 });
