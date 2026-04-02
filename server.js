@@ -4,11 +4,9 @@ const cors = require("cors");
 
 const app = express();
 
-// allow frontend (edgeone)
 app.use(cors({ origin: "*" }));
 app.use(express.json());
 
-// test route
 app.get("/", (req, res) => {
   res.send("Backend hidup 🔥");
 });
@@ -27,10 +25,12 @@ app.post("/api/check", async (req, res) => {
         "Content-Type": "application/json",
         "Origin": "https://app.lk21.st",
         "Referer": "https://app.lk21.st/amarok",
-        "User-Agent": "Mozilla/5.0",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        "Accept": "*/*",
+        "Accept-Language": "en-US,en;q=0.9",
 
-        // 🔥 WAJIB: isi cookie dari browser kamu
-        "Cookie": "amarok_session=ISI_COOKIE_KAMU_DI_SINI"
+        // ✅ COOKIE FIX (punya kamu)
+        "Cookie": "amarok_session=d21fa8ce031b8a898cca218440a80a6a4c41a803d2d2c1f72bf8ea4ea1eeeade"
       },
       body: JSON.stringify({
         domains: [domain]
@@ -38,6 +38,8 @@ app.post("/api/check", async (req, res) => {
     });
 
     const text = await response.text();
+
+    console.log("RAW:", text); // debug
 
     try {
       const json = JSON.parse(text);
@@ -47,6 +49,7 @@ app.post("/api/check", async (req, res) => {
     }
 
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: err.toString() });
   }
 });
