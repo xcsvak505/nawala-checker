@@ -30,7 +30,7 @@ app.post("/api/check", async (req, res) => {
         "Accept-Language": "en-US,en;q=0.9",
 
         // ✅ COOKIE FIX (punya kamu)
-        "Cookie": "amarok_session=d21fa8ce031b8a898cca218440a80a6a4c41a803d2d2c1f72bf8ea4ea1eeeade"
+        "Cookie": "amarok_session=20cb322636652dfcbcb59208d10b11d80f4685ec8a18d538de04c93f0368192a"
       },
       body: JSON.stringify({
         domains: [domain]
